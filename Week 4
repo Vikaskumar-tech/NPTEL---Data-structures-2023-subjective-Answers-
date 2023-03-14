@@ -1,0 +1,402 @@
+Q.1  You are given a large dataset of student information containing their name, roll number, and marks in      different subjects. Write a program to store this data in a suitable data structure and provide               
+
+    functionalities to search for a student, add a new student, and delete an existing student.
+
+Ans. 
+
+# Define an empty dictionary to store student information
+
+Students = {}
+
+
+
+# Function to search for a student
+
+Def search_student(roll_number):
+
+    If roll_number in students:
+
+        Return students[roll_number]
+
+    Else:
+
+        Return “Student not found”
+
+
+
+# Function to add a new student
+
+Def add_student(name, roll_number, marks):
+
+    Students[roll_number] = {“name”: name, “marks”: marks}
+
+
+
+# Function to delete an existing student
+
+Def delete_student(roll_number):
+
+    If roll_number in students:
+
+        Del students[roll_number]
+
+        Print(“Student deleted”)
+
+    Else:
+
+        Print(“Student not found”)
+
+
+
+# Test the program with sample data
+
+Add_student(“John Doe”, “001”, {“Maths”: 90, “Science”: 85, “English”: 92})
+
+Add_student(“Jane Doe”, “002”, {“Maths”: 95, “Science”: 92, “English”: 90})
+
+
+
+Print(search_student(“001”))  # Output: {‘name’: ‘John Doe’, ‘marks’: {‘Maths’: 90, ‘Science’: 85, ‘English’: 92}}
+
+Print(search_student(“003”))  # Output: “Student not found”
+
+
+
+Delete_student(“002”)         # Output: “Student deleted”
+
+Print(search_student(“002”))  # Output: “Student not found”
+
+
+
+Q.2 Given a dataset of employees in a company. Write a program to store the data in a binary search tree and provide functionalities to search for an employee by their ID, add a new employee, and remove  an existing employee.
+
+Ans . class Employee:
+
+    def __init__(self, emp_id, name, department, salary):
+
+        self.emp_id = emp_id
+
+        self.name = name
+
+        self.department = department
+
+        self.salary = salary
+
+        
+
+class BSTNode:
+
+    def __init__(self, employee):
+
+        self.employee = employee
+
+        self.left = None
+
+        self.right = None
+
+        
+
+class EmployeeBST:
+
+    def __init__(self):
+
+        self.root = None
+
+        
+
+    def search(self, emp_id):
+
+        return self._search_helper(self.root, emp_id)
+
+    
+
+    def _search_helper(self, node, emp_id):
+
+        if node is None:
+
+            return None
+
+        if node.employee.emp_id == emp_id:
+
+            return node.employee
+
+        if node.employee.emp_id < emp_id:
+
+            return self._search_helper(node.right, emp_id)
+
+        return self._search_helper(node.left, emp_id)
+
+    
+
+    def insert(self, employee):
+
+        self.root = self._insert_helper(self.root, employee)
+
+    
+
+    def _insert_helper(self, node, employee):
+
+        if node is None:
+
+            return BSTNode(employee)
+
+        if node.employee.emp_id < employee.emp_id:
+
+            node.right = self._insert_helper(node.right, employee)
+
+        else:
+
+            node.left = self._insert_helper(node.left, employee)
+
+        return node
+
+    
+
+    def delete(self, emp_id):
+
+        self.root = self._delete_helper(self.root, emp_id)
+
+    
+
+    def _delete_helper(self, node, emp_id):
+
+        if node is None:
+
+            return None
+
+        if node.employee.emp_id == emp_id:
+
+            if node.left is None:
+
+                return node.right
+
+            if node.right is None:
+
+                return node.left
+
+            min_node = self._find_min(node.right)
+
+            node.employee = min_node.employee
+
+            node.right = self._delete_helper(node.right, min_node.employee.emp_id)
+
+        elif node.employee.emp_id < emp_id:
+
+            node.right = self._delete_helper(node.right, emp_id)
+
+        else:
+
+            node.left = self._delete_helper(node.left, emp_id)
+
+        return node
+
+    
+
+    def _find_min(self, node):
+
+        while node.left is not None:
+
+            node = node.left
+
+        return node
+
+
+
+
+
+Q.3 Given a list of integers. Write a program to find the kth smallest element in the list.
+
+Ans. Def find_kth_smallest(lst, k):
+
+    “””
+
+    Finds the kth smallest element in a list of integers using quickselect algorithm.
+
+    “””
+
+    If k > len(lst):
+
+        Return None
+
+    
+
+    Pivot = lst[0]
+
+    Left = [x for x in lst if x < pivot]
+
+    Right = [x for x in lst if x > pivot]
+
+    Equal = [x for x in lst if x == pivot]
+
+    
+
+    If k <= len(left):
+
+        Return find_kth_smallest(left, k)
+
+    Elif k > len(left) + len(equal):
+
+        Return find_kth_smallest(right, k – len(left) – len(equal))
+
+    Else:import queue
+
+
+
+# Create an empty queue
+
+Line = queue.Queue()
+
+
+
+# Function to join the line
+
+Def join_line(name):
+
+    Line.put(name)
+
+    Print(f”{name} joined the line.”)
+
+    
+
+# Function to leave the line
+
+Def leave_line():
+
+    If line.empty():
+
+        Print(“The line is already empty.”)
+
+    Else:
+
+        Name = line.get()
+
+        Print(f”{name} left the line.”)
+
+
+
+# Function to check the length of the line
+
+Def check_length():
+
+    Length = line.qsize()
+
+    If length == 0:
+
+        Print(“The line is empty.”)
+
+    Elif length == 1:
+
+        Print(“There is 1 person in line.”)
+
+    Else:
+
+        Print(f"There are {length} people in line.")
+
+
+
+        Return equal[0]
+
+
+
+Q.4 Implement a program to simulate a queue of people waiting in a line for a rollercoaster ride. Use a queue data structure to keep track of the people in the line. The program should allow people to join the line, leave the line, and check the length of the line.
+
+Ans . import queue
+
+
+
+# Create an empty queue
+
+Line = queue.Queue()
+
+
+
+# Function to join the line
+
+Def join_line(name):
+
+    Line.put(name)
+
+    Print(f”{name} joined the line.”)
+
+    
+
+# Function to leave the line
+
+Def leave_line():
+
+    If line.empty():
+
+        Print(“The line is already empty.”)
+
+    Else:
+
+        Name = line.get()
+
+        Print(f”{name} left the line.”)
+
+
+
+# Function to check the length of the line
+
+Def check_length():
+
+    Length = line.qsize()
+
+    If length == 0:
+
+        Print(“The line is empty.”)
+
+    Elif length == 1:
+
+        Print(“There is 1 person in line.”)
+
+    Else:
+
+        Print(f”There are {length} people in line.”)
+
+
+
+
+
+Q.5 Given a list of integers. Write a program to find the maximum difference between two elements in the list, where the larger element appears after the smaller element.
+
+Ans. Def max_difference(lst):
+
+    “””
+
+    Finds the maximum difference between two elements in a list of integers where the larger
+
+    Element appears after the smaller element.
+
+    “””
+
+    If len(lst) < 2:
+
+        Return None
+
+    
+
+    Min_so_far = lst[0]
+
+    Max_diff_so_far = lst[1] – lst[0]
+
+    
+
+    For I in range(1, len(lst)):
+
+        If lst[i] < min_so_far:
+
+            Min_so_far = lst[i]
+
+        Elif lst[i] – min_so_far > max_diff_so_far:
+
+            Max_diff_so_far = lst[i] – min_so_far
+
+            
+
+    Return max_diff_so_far
+
+
+
+
+
